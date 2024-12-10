@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Weather Website</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="header">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Enter a city..."
+          class="search-bar"
+        />
+        <button id="search-btn" class="search-btn">Search</button>
+      </header>
+
+      <div class="weather-app">
+        <div class="weather-card">
+          <div class="weather-front">
+            <div class="current-weather">
+              <h2 class="city-name">City Name</h2>
+              <div class="temperature">23°C</div>
+              <div class="condition">Sunny</div>
+            </div>
+          </div>
+          <div class="weather-back">
+            <div class="detailed-weather">
+              <p>Humidity: 60%</p>
+              <p>Wind Speed: 10 km/h</p>
+              <p>Pressure: 1013 hPa</p>
+              <p>UV Index: 5</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="additional-info-container">
+        <div class="info-box glass-effect" id="co2-content">
+          <h4>CO2 Content</h4>
+          <p id="co2-content-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="pollen-level">
+          <h4>Pollen Level</h4>
+          <p id="pollen-level-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="driving-visibility">
+          <h4>Driving Visibility</h4>
+          <p id="driving-visibility-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="pollution-sources">
+          <h4>Pollution Sources</h4>
+          <p id="pollution-sources-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="aqi-tips">
+          <h4>AQI Improvement Tips</h4>
+          <p id="aqi-tips-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="vulnerable-groups">
+          <h4>Vulnerable Groups</h4>
+          <p id="vulnerable-groups-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="uv-index">
+          <h4>UV Index</h4>
+          <p id="uv-index-value">--</p>
+        </div>
+        <div class="info-box glass-effect" id="indoor-devices">
+          <h4>Devices for Indoor Air Quality</h4>
+          <p id="indoor-devices-value">--</p>
+        </div>
+      </div>
+
+      <div class="forecast-container">
+        <!-- Dynamic content to be populated by JavaScript -->
+      </div>
+
+      <div id="loading-spinner" class="spinner hidden">
+        <div class="loader"></div>
+      </div>
+
+      <footer class="footer">
+        <button id="dark-mode-toggle" class="dark-mode-toggle">🌙</button>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
