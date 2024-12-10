@@ -7,6 +7,7 @@ const condition = document.querySelector(".condition");
 const detailedWeather = document.querySelector(".detailed-weather");
 const loadingSpinner = document.getElementById("loading-spinner");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
+const body = document.body;
 const forecastContainer = document.querySelector(".forecast-container"); // Moved to global scope
 const weatherIcon = document.getElementById("weather-icon");
 
@@ -219,4 +220,9 @@ searchInput.addEventListener("keydown", (e) => {
 // Dark Mode Toggle
 darkModeToggle.addEventListener("click", () => {
 	document.body.classList.toggle("dark-mode");
+	if (body.classList.contains("dark-mode")) {
+		darkModeToggle.textContent = "🌞"; // Sun icon for light mode
+	} else {
+		darkModeToggle.textContent = "🌙"; // Moon icon for dark mode
+	}
 });

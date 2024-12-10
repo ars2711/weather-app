@@ -4,14 +4,32 @@ html {
   margin: 0;
   padding: 0;
   font-family: "Titillium Web", sans-serif;
-  background-color: #e4eaf0;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    149deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
   color: #333;
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* Dark mode */
 body.dark-mode {
-  background-color: #121212;
-  color: #fff;
+  background-color: #2e2e2e;
+  color: #f0f0f0;
+}
+
+body.dark-mode .card {
+  background-color: #333;
+  border: 1px solid #555;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .card:hover {
+  background-color: #444;
+  box-shadow: 0 2px 20px rgba(255, 255, 255, 0.3);
 }
 
 /* App Container */
