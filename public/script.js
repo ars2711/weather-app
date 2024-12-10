@@ -144,16 +144,13 @@ function updateWeatherDetails(data) {
 	// Change background based on weather condition
 	const conditionTextLower = condition.text.toLowerCase();
 	document.body.className = ""; // Reset background classes
-	if (
-		conditionTextLower.includes("clear") ||
-		conditionTextLower.includes("sunny")
-	) {
+	if (conditionTextLower.includes("sunny")) {
 		document.body.classList.add("sunny");
 	} else if (conditionTextLower.includes("rain")) {
 		document.body.classList.add("rainy");
 	} else if (conditionTextLower.includes("cloud")) {
 		document.body.classList.add("cloudy");
-	} else if (conditionTextLower.includes("night")) {
+	} else if (conditionTextLower.includes("clear")) {
 		document.body.classList.add("night");
 	}
 }
