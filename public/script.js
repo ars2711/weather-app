@@ -8,6 +8,7 @@ const detailedWeather = document.querySelector(".detailed-weather");
 const loadingSpinner = document.getElementById("loading-spinner");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const forecastContainer = document.querySelector(".forecast-container"); // Moved to global scope
+const weatherIcon = document.getElementById("weather-icon");
 
 // Additional Info Containers
 const co2Content = document.getElementById("co2-content-value");
@@ -45,9 +46,16 @@ async function fetchWeather(city) {
 // Function to update the weather and air quality details in the DOM
 function updateWeatherDetails(data) {
 	const { location, current, forecast } = data;
+
+	// If the current weather condition data is missing
+	if (!current || !current.condition) {
+		console.error("Error: Missing current weather data or condition.");
+		return; // Exit if required data is missing
+	}
+
 	const {
 		temp_c,
-		condition: weatherCondition,
+		condition, // directly destructuring 'condition' from 'current'
 		humidity,
 		wind_kph,
 		pressure_mb,
@@ -55,13 +63,16 @@ function updateWeatherDetails(data) {
 		air_quality,
 	} = current;
 
+	// Ensure the elements are selected before using
+	const conditionText = document.querySelector(".condition");
+	conditionText.textContent = condition.text || "No condition info"; // Safeguard
+
 	// Update basic weather information
 	cityName.textContent = location.name || "City Name";
 	temperature.textContent = `${Math.round(temp_c)}°C`;
-	condition.textContent = weatherCondition.text;
-	document.getElementById(
-		"weather-icon"
-	).src = `https:${weatherCondition.icon}`;
+
+	// Set the weather icon
+	document.getElementById("weather-icon").src = `https:${condition.icon}`;
 
 	// Update detailed weather
 	detailedWeather.innerHTML = `
@@ -71,22 +82,46 @@ function updateWeatherDetails(data) {
     <p>UV Index: ${uv}</p>
   `;
 
-	// Update air quality details
+	// Update air quality details if available
 	if (air_quality) {
 		const { co, pm10, us_epa_index } = air_quality;
 
-		co2Content.textContent = `${co.toFixed(2)} µg/m³ (CO)`;
-		pollenLevel.textContent = `${pm10.toFixed(2)} µg/m³ (PM10)`; // Placeholder
-		drivingVisibility.textContent = "Good"; // Placeholder
-		pollutionSources.textContent = "Vehicles, factories"; // Example
+		// CO2 Content
+		co2Content.textContent = co ? `${co.toFixed(2)} µg/m³ (CO)` : "--";
+
+		// Pollen Level (PM10)
+		pollenLevel.textContent = pm10 ? `${pm10.toFixed(2)} µg/m³ (PM10)` : "--";
+
+		// Driving Visibility (just an example, modify based on real data)
+		drivingVisibility.textContent = air_quality.pm10 ? "Good" : "--";
+
+		// Pollution Sources (example, modify based on real data)
+		pollutionSources.textContent = "Vehicles, factories";
+
+		// AQI Improvement Tips
 		aqiTips.textContent = getAQITips(us_epa_index);
+
+		// Vulnerable Groups
 		vulnerableGroups.textContent = getVulnerableGroups(us_epa_index);
+
+		// UV Index (already updated above)
 		uvIndex.textContent = uv || "--";
+
+		// Devices for Indoor Air Quality
 		indoorDevices.textContent = "Air purifiers, dehumidifiers.";
+	} else {
+		// In case air_quality data is missing, use default values
+		co2Content.textContent = "--";
+		pollenLevel.textContent = "--";
+		drivingVisibility.textContent = "--";
+		pollutionSources.textContent = "--";
+		aqiTips.textContent = "--";
+		vulnerableGroups.textContent = "--";
+		uvIndex.textContent = "--";
+		indoorDevices.textContent = "--";
 	}
 
 	// Update 7-day forecast
-	const forecastContainer = document.querySelector(".forecast-container");
 	forecastContainer.innerHTML = ""; // Clear previous forecast
 	forecast.forecastday.forEach((day) => {
 		const forecastDay = document.createElement("div");
@@ -101,20 +136,23 @@ function updateWeatherDetails(data) {
         <p>${Math.round(day.day.maxtemp_c)}°C / ${Math.round(
 			day.day.mintemp_c
 		)}°C</p>
-      `;
+    `;
 		forecastContainer.appendChild(forecastDay);
 	});
 
 	// Change background based on weather condition
-	const conditionText = weatherCondition.text.toLowerCase();
+	const conditionTextLower = condition.text.toLowerCase();
 	document.body.className = ""; // Reset background classes
-	if (conditionText.includes("clear") || conditionText.includes("sunny")) {
+	if (
+		conditionTextLower.includes("clear") ||
+		conditionTextLower.includes("sunny")
+	) {
 		document.body.classList.add("sunny");
-	} else if (conditionText.includes("rain")) {
+	} else if (conditionTextLower.includes("rain")) {
 		document.body.classList.add("rainy");
-	} else if (conditionText.includes("cloud")) {
+	} else if (conditionTextLower.includes("cloud")) {
 		document.body.classList.add("cloudy");
-	} else if (conditionText.includes("night")) {
+	} else if (conditionTextLower.includes("night")) {
 		document.body.classList.add("night");
 	}
 }
