@@ -46,7 +46,7 @@ body.dark-mode .weather-card:hover {
 
 /* Glassmorphism Effect */
 .glass-effect {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.342);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -93,7 +93,7 @@ body.dark-mode .weather-card:hover {
   padding: 20px;
   width: 350px;
   margin: 20px auto;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.342);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -139,7 +139,7 @@ body.dark-mode .weather-card:hover {
 }
 
 .forecast-day {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.342);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -194,4 +194,13 @@ body.night {
 
 body.cloudy {
   background: linear-gradient(to bottom, #d6dbdf, #aab7b8);
+}
+
+@media (max-width: 768px) {
+  .weather-card {
+    flex-direction: column;
+  }
+  .forecast-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

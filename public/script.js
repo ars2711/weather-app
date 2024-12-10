@@ -99,8 +99,15 @@ function updateWeatherDetails(data) {
 		// Pollution Sources (example, modify based on real data)
 		pollutionSources.textContent = "Vehicles, factories";
 
+		// AQI Level
+		const aqiLevel = us_epa_index || "--"; // EPA index
+		const aqiLevelCard = document.querySelector("#aqi-level"); // Create or select AQI card
+		aqiLevelCard.innerHTML = `
+            ${aqiLevel}
+        `;
+
 		// AQI Improvement Tips
-		aqiTips.textContent = getAQITips(us_epa_index);
+		aqiTips.textContent = getAQITips(aqiLevel);
 
 		// Vulnerable Groups
 		vulnerableGroups.textContent = getVulnerableGroups(us_epa_index);
@@ -159,17 +166,17 @@ function updateWeatherDetails(data) {
 function getAQITips(index) {
 	switch (index) {
 		case 1:
-			return "Air quality is good. No precautions needed.";
+			return "Air quality is good. Consider walking or cycling instead of driving.";
 		case 2:
-			return "Moderate air quality. Sensitive groups should limit outdoor activities.";
+			return "Moderate air quality. Use public transport or carpool to reduce pollution.";
 		case 3:
-			return "Unhealthy for sensitive groups. Consider wearing a mask outdoors.";
+			return "Unhealthy for sensitive groups. Avoid prolonged outdoor exposure.";
 		case 4:
-			return "Unhealthy. Limit outdoor exposure.";
+			return "Unhealthy. Limit outdoor activities and use air purifiers indoors.";
 		case 5:
-			return "Very unhealthy. Avoid going outside if possible.";
+			return "Very unhealthy. Avoid going outside and keep windows closed.";
 		case 6:
-			return "Hazardous. Stay indoors with air filtration.";
+			return "Hazardous. Stay indoors with air filtration systems.";
 		default:
 			return "No data available.";
 	}
@@ -223,3 +230,15 @@ darkModeToggle.addEventListener("click", () => {
 		darkModeToggle.textContent = "🌙"; // Moon icon for dark mode
 	}
 });
+if (!data.location) {
+	throw new Error("City not found or API error.");
+}
+if (!data.current) {
+	throw new Error("Current weather data is unavailable.");
+}
+if (!data.forecast) {
+	throw new Error("Forecast data is missing.");
+}
+if (!forecast.forecastday || forecast.forecastday.length === 0) {
+	forecastContainer.innerHTML = "<p>No forecast data available.</p>";
+}
