@@ -242,3 +242,15 @@ if (!data.forecast) {
 if (!forecast.forecastday || forecast.forecastday.length === 0) {
 	forecastContainer.innerHTML = "<p>No forecast data available.</p>";
 }
+
+/*
+ *    ___________________________
+ *   |                           |
+ *   |            /-\            |
+ *   |           /   \           |
+ *   |          /__A__\          |
+ *   |       Arsalan Afzal       |
+ *   |                           |
+ *   |___________________________|
+ *          |_____________|
+ */
